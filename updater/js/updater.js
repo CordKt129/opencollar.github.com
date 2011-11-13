@@ -13,8 +13,9 @@ var OCUpdater = {
         }
     },
 
-    init: function() {
+    init: function(el) {
         //console.log('init');
+        this.attachTo = el;
         this.url = this.getQParam('url');
         this.av = this.getQParam('av');
         this.tok = this.getQParam('tok');
@@ -23,7 +24,7 @@ var OCUpdater = {
     
     onBundles: function(bundles) {
         //console.log(bundles);
-        var body = $('body');
+        var body = $(this.attachTo);
         var guts = '<ul>';
         $.each(bundles.bundles, function() {
             //console.log(this);
@@ -43,7 +44,7 @@ var OCUpdater = {
             }
         });
         guts += '</ul>';
-        body.append(guts);
+        body.html(guts);
     },
     
     buildURL: function(path, extra) {
@@ -69,5 +70,5 @@ var OCUpdater = {
 };
 
 $(document).ready(function() {
-    OCUpdater.init();
+    OCUpdater.init("#main");
 });
