@@ -18,7 +18,7 @@ var OCUpdater = {
         this.url = this.getQParam('url');
         this.av = this.getQParam('av');
         this.tok = this.getQParam('tok');
-        this.request(this.buildURL(this.bundlePath), this.onBundles, this);
+        this.request(this.buildURL(this.bundlePath, 'list'), this.onBundles, this);
     },
     
     onBundles: function(bundles) {
@@ -30,10 +30,11 @@ var OCUpdater = {
         });
     },
     
-    buildURL: function(path) {
+    buildURL: function(path, cmd) {
       var url = this.url + path + '?callback=?';
         url += "&av=" + this.av;
         url += "&tok=" + this.tok;
+        url += "&cmd=" + cmd;
         return url; 
     },
     
