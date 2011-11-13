@@ -24,17 +24,28 @@ var OCUpdater = {
     onBundles: function(bundles) {
         //console.log(bundles);
         var body = $('body');
+        var guts = '<ul>';
         $.each(bundles.bundles, function() {
             //console.log(this);
-            body.append('<br>' + this.name + ': ' + this.status);
+            var checked = this.status == 'INSTALL';
+            guts += '<li><input type="checkbox" name="' + this.name + '"';
+            if (checked) {
+              guts += " checked ";
+            }
+            guts += '/></li>';
         });
+        guts += '</ul>';
+        body.append(guts);
     },
     
-    buildURL: function(path, cmd) {
+    buildURL: function(path, extra) {
       var url = this.url + path + '?callback=?';
         url += "&av=" + this.av;
         url += "&tok=" + this.tok;
-        url += "&cmd=" + cmd;
+        if (extra) {
+          // extra should be an object.
+          // urlencode its values and tack it onto the query string.
+        }
         return url; 
     },
     
