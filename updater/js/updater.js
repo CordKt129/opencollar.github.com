@@ -26,26 +26,17 @@ var OCUpdater = {
         //console.log(bundles);
         var self = this;
         var body = $(self.config.container);
-        var guts = '<ul>';
+        var tmpl = $(this.config.tmplBundle);
         $.each(bundles.bundles, function() {
             //console.log(self);
             if (this.status != 'DEPRECATED') {
-              var checked = this.status == 'INSTALL' || this.status == 'REQUIRED';
-              // TODO: Use a JS template to build the checkbox instead of this
-              // godawful mess.
-              guts += '<li><input class="bundle" type="checkbox" name="' + this.name + '"';
-              guts += ' id="bundle_' + this.name + '"';
-              if (checked) {
-                guts += ' checked="checked" ';
-              }
-              if (this.status == 'REQUIRED') {
-                guts += " disabled ";
-              }
-              guts += '/><label for="bundle_' + this.name + '">' + this.name + '</label></li>';
+              this.install = this.status == 'INSTALL' || this.status == 'REQUIRED';
+              this.required = this.status == 'REQUIRED';
+              // set status to false if deprecated
+              this.status = this.status == 'DEPRECATED' ? false : this.status;
             }
         });
-        guts += '</ul>';
-        body.html(guts);
+        body.html(tmpl.mustache(bundles));
         $('.bundle').change({self: self}, self.onBundleClick);
     },
 

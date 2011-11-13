@@ -9,10 +9,14 @@
   <script src="js/mustache.js"></script>
   <script src="js/updater.js"></script>
   <script id="tmpl_bundle" type="text/html">
-    <li>
-      <input class="bundle" type="checkbox" name="{{name}}" id="bundle_{{name}}" {{#install}}checked="checked"{{/install}}>
-      <label for="bundle_{{name}}">{{name}}</label>
-    </li> 
+    <ul>
+      {{#bundles}}{{#status}}
+      <li>
+        <input class="bundle" type="checkbox" name="{{name}}" id="bundle_{{name}}" {{#install}}checked="checked"{{/install}} {{#required}}disabled{{/required}}>
+        <label for="bundle_{{name}}">{{name}}</label>
+      </li>
+      {{/status}}{{/bundles}}
+    </ul>
   </script>
 </head>
 <body>
