@@ -14,7 +14,7 @@ var OCUpdater = {
     },
 
     init: function() {
-        console.log('init');
+        //console.log('init');
         this.url = this.getQParam('url');
         this.av = this.getQParam('av');
         this.tok = this.getQParam('tok');
@@ -22,7 +22,10 @@ var OCUpdater = {
     },
     
     onBundles: function(bundles) {
-        console.log(bundles);
+        //console.log(bundles);
+        $.each(bundles.bundles, function() {
+            console.log(this);
+        });
     },
     
     buildURL: function(path) {
@@ -33,7 +36,7 @@ var OCUpdater = {
     },
     
     request: function(url, callback, context) {
-        console.log('request: ' + url);
+        //console.log('request: ' + url);
         $.ajax({
           url: url,
           dataType: 'jsonp',
