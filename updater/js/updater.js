@@ -50,8 +50,8 @@ var OCUpdater = {
     },
 
     onBundleClick: function(ev) {
-        console.log(this);
-        console.log(ev);
+        var self = ev.data.self;
+        console.log($(this).val());
     },
     
     buildURL: function(path, extra) {
