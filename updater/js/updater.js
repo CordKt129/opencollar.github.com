@@ -13,9 +13,9 @@ var OCUpdater = {
         }
     },
 
-    init: function(el) {
+    init: function(config) {
         //console.log('init');
-        this.attachTo = el;
+        this.config = config;
         this.url = this.getQParam('url');
         this.av = this.getQParam('av');
         this.tok = this.getQParam('tok');
@@ -25,7 +25,7 @@ var OCUpdater = {
     onBundles: function(bundles) {
         //console.log(bundles);
         var self = this;
-        var body = $(self.attachTo);
+        var body = $(self.config.container);
         var guts = '<ul>';
         $.each(bundles.bundles, function() {
             //console.log(self);
@@ -77,5 +77,8 @@ var OCUpdater = {
 };
 
 $(document).ready(function() {
-    OCUpdater.init("#main");
+    OCUpdater.init({
+        container: "#main",
+        tmplBundle: "#tmpl_bundle" 
+    });
 });
