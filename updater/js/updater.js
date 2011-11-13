@@ -37,8 +37,6 @@ var OCUpdater = {
               guts += ' id="bundle_' + this.name + '"';
               if (checked) {
                 guts += ' checked="checked" ';
-              } else {
-                guts += ' checked="unchecked" ';
               }
               if (this.status == 'REQUIRED') {
                 guts += " disabled ";
@@ -53,7 +51,7 @@ var OCUpdater = {
 
     onBundleClick: function(ev) {
         var self = ev.data.self;
-        console.log($(this).val());
+        console.log(this.checked);
     },
     
     buildURL: function(path, extra) {
