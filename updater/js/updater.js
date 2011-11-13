@@ -27,12 +27,14 @@ var OCUpdater = {
         var guts = '<ul>';
         $.each(bundles.bundles, function() {
             //console.log(this);
-            var checked = this.status == 'INSTALL';
-            guts += '<li><input type="checkbox" name="' + this.name + '"';
-            if (checked) {
-              guts += " checked ";
+            if (this.status != 'DEPRECATED') {
+              var checked = this.status == 'INSTALL' || this.status == 'REQUIRED';
+              guts += '<li><input type="checkbox" name="' + this.name + '"';
+              if (checked) {
+                guts += " checked ";
+              }
+              guts += '/><label for="' + this.name + '">' + this.name + '</label></li>';
             }
-            guts += '/></li>';
         });
         guts += '</ul>';
         body.append(guts);
