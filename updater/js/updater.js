@@ -29,19 +29,19 @@ var OCUpdater = {
         var guts = '<ul>';
         $.each(bundles.bundles, function() {
             //console.log(self);
-            if (self.status != 'DEPRECATED') {
-              var checked = self.status == 'INSTALL' || self.status == 'REQUIRED';
-              // TODO: Use a JS template to build the checkbox instead of self
+            if (this.status != 'DEPRECATED') {
+              var checked = this.status == 'INSTALL' || this.status == 'REQUIRED';
+              // TODO: Use a JS template to build the checkbox instead of this
               // godawful mess.
-              guts += '<li><input class="bundle" type="checkbox" name="' + self.name + '"';
-              guts += ' id="bundle_' + self.name + '"';
+              guts += '<li><input class="bundle" type="checkbox" name="' + this.name + '"';
+              guts += ' id="bundle_' + this.name + '"';
               if (checked) {
                 guts += " checked ";
               }
-              if (self.status == 'REQUIRED') {
+              if (this.status == 'REQUIRED') {
                 guts += " disabled ";
               }
-              guts += '/><label for="bundle_' + self.name + '">' + self.name + '</label></li>';
+              guts += '/><label for="bundle_' + this.name + '">' + this.name + '</label></li>';
             }
         });
         guts += '</ul>';
