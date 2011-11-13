@@ -36,7 +36,9 @@ var OCUpdater = {
               guts += '<li><input class="bundle" type="checkbox" name="' + this.name + '"';
               guts += ' id="bundle_' + this.name + '"';
               if (checked) {
-                guts += " checked ";
+                guts += ' checked="checked" ';
+              } else {
+                guts += ' checked="unchecked" ';
               }
               if (this.status == 'REQUIRED') {
                 guts += " disabled ";
