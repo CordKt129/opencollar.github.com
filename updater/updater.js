@@ -25,7 +25,7 @@ var OCUpdater = {
         //console.log(bundles);
         var body = $('body');
         $.each(bundles.bundles, function() {
-            console.log(this);
+            //console.log(this);
             body.append('<br>' + this.name + ': ' + this.status);
         });
     },
