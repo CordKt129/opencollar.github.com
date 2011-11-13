@@ -36,6 +36,9 @@ var OCUpdater = {
               if (checked) {
                 guts += " checked ";
               }
+              if (this.status == 'REQUIRED') {
+                guts += " disabled ";
+              }
               guts += '/><label for="bundle_' + this.name + '">' + this.name + '</label></li>';
             }
         });
