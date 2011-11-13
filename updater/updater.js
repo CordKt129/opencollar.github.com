@@ -15,9 +15,9 @@ var OCUpdater = {
 
     init: function() {
         console.log('init');
-        this.url = qParam('url');
-        this.av = qParam('av');
-        this.tok = qParam('tok');
+        this.url = this.qParam('url');
+        this.av = this.qParam('av');
+        this.tok = this.qParam('tok');
         this.request(this.buildURL(this.bundlePath), this.onBundles, this);
     },
     
