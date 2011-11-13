@@ -24,27 +24,34 @@ var OCUpdater = {
     
     onBundles: function(bundles) {
         //console.log(bundles);
-        var body = $(this.attachTo);
+        var self = this;
+        var body = $(self.attachTo);
         var guts = '<ul>';
         $.each(bundles.bundles, function() {
-            //console.log(this);
-            if (this.status != 'DEPRECATED') {
-              var checked = this.status == 'INSTALL' || this.status == 'REQUIRED';
-              // TODO: Use a JS template to build the checkbox instead of this
+            //console.log(self);
+            if (self.status != 'DEPRECATED') {
+              var checked = self.status == 'INSTALL' || self.status == 'REQUIRED';
+              // TODO: Use a JS template to build the checkbox instead of self
               // godawful mess.
-              guts += '<li><input type="checkbox" name="' + this.name + '"';
-              guts += ' id="bundle_' + this.name + '"';
+              guts += '<li><input class="bundle" type="checkbox" name="' + self.name + '"';
+              guts += ' id="bundle_' + self.name + '"';
               if (checked) {
                 guts += " checked ";
               }
-              if (this.status == 'REQUIRED') {
+              if (self.status == 'REQUIRED') {
                 guts += " disabled ";
               }
-              guts += '/><label for="bundle_' + this.name + '">' + this.name + '</label></li>';
+              guts += '/><label for="bundle_' + self.name + '">' + self.name + '</label></li>';
             }
         });
         guts += '</ul>';
         body.html(guts);
+        $('.bundle').change({self: self}, self.onBundleClick);
+    },
+
+    onBundleClick: function(ev) {
+        console.log(this);
+        console.log(ev);
     },
     
     buildURL: function(path, extra) {
