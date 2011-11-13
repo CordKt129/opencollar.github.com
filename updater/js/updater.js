@@ -29,11 +29,14 @@ var OCUpdater = {
             //console.log(this);
             if (this.status != 'DEPRECATED') {
               var checked = this.status == 'INSTALL' || this.status == 'REQUIRED';
+              // TODO: Use a JS template to build the checkbox instead of this
+              // godawful mess.
               guts += '<li><input type="checkbox" name="' + this.name + '"';
+              guts += ' id="bundle_' + this.name + '"';
               if (checked) {
                 guts += " checked ";
               }
-              guts += '/><label for="' + this.name + '">' + this.name + '</label></li>';
+              guts += '/><label for="bundle_' + this.name + '">' + this.name + '</label></li>';
             }
         });
         guts += '</ul>';
