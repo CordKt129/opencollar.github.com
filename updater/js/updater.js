@@ -25,13 +25,12 @@ var OCUpdater = {
         var self = this;
         var body = $(self.config.container);
         var tmpl = $(self.config.tmplBundle);
+        // set some flags on each bundle for controlling template logic
         $.each(bundles.bundles, function() {
-            if (this.status != 'DEPRECATED') {
-              this.install = this.status == 'INSTALL' || this.status == 'REQUIRED';
-              this.required = this.status == 'REQUIRED';
-              // set status to false if deprecated
-              this.status = this.status == 'DEPRECATED' ? false : this.status;
-            }
+          this.install = this.status == 'INSTALL' || this.status == 'REQUIRED';
+          this.required = this.status == 'REQUIRED';
+          // set status to false if deprecated
+          this.status = this.status == 'DEPRECATED' ? false : this.status;
         });
         body.html(tmpl.mustache(bundles));
         $(self.config.clsBundle).change({self: self}, self.onBundleClick);
@@ -58,11 +57,14 @@ var OCUpdater = {
         url += "&av=" + this.av;
         url += "&tok=" + this.tok;
         if (extra) {
+          // extra should be an object.
+          // urlencode its values and tack it onto the query string.
+          // encodeURI will preseve tildes (~), which the LSL script uses to delimit
+          // the bundle list if you're marking more than one bundle for
+          // installation/uninstallation at once.
           $.each(extra, function(key, value) {
               url += "&" + encodeURI(key) + "=" + encodeURI(value); 
           });
-          // extra should be an object.
-          // urlencode its values and tack it onto the query string.
         }
         return url; 
     },
