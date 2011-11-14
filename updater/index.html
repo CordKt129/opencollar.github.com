@@ -3,26 +3,34 @@
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <title>OpenCollar Updater</title>
   <link rel="stylesheet" href="css/updater.css" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400|Oswald' rel='stylesheet' type='text/css'>  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
   <script src="js/mustache.js"></script>
   <script src="js/updater.js"></script>
   <script id="tmpl_bundle" type="text/html">
+    <h1>{{name}}</h1>
+    {{#families}}
+    <div class="bundlefam">
+    <h2>{{name}}</h2>
     <ul>
       {{#bundles}}{{#status}}
-      <li>
-        <input class="bundle" type="checkbox" name="{{name}}" id="bundle_{{name}}" {{#install}}checked="checked"{{/install}} {{#required}}disabled{{/required}}>
-        <label for="bundle_{{name}}">{{name}}</label>
+      <li {{#newgroup}}class="newgroup"{{/newgroup}}>
+        <input class="bundle" type="checkbox" name="{{name}}" id="bundle_{{name}}" {{#install}}checked="checked"{{/install}} {{#required}}disabled="disabled"{{/required}} {{#family}}data-family="{{family}}{{/family}}">
+        <label for="bundle_{{name}}">{{label}}</label>
       </li>
       {{/status}}{{/bundles}}
     </ul>
-    <button id="start">Start</button>
+    </div>
+    {{/families}}
+    <div style="clear: both;"></div>
+    <button id="start">Start Update</button>
   </script>
 </head>
 <body>
   <div id="content">
     
-  <p>This is the page for the new experimental web-based UI for the OpenCollar Updater.</p>
   <div id="main">
+    <h1>OpenCollar Updater</h1>
   </div>
 </div>
 </body>
