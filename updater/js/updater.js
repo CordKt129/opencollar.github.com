@@ -14,21 +14,18 @@ var OCUpdater = {
     },
 
     init: function(config) {
-        //console.log('init');
         this.config = config;
         this.url = this.getQParam('url');
         this.av = this.getQParam('av');
         this.tok = this.getQParam('tok');
-        this.request(this.buildURL(this.bundlePath, 'list'), this.onBundles, this);
+        this.request(this.buildURL(this.bundlePath), this.onBundles, this);
     },
     
     onBundles: function(bundles) {
-        //console.log(bundles);
         var self = this;
         var body = $(self.config.container);
-        var tmpl = $(this.config.tmplBundle);
+        var tmpl = $(self.config.tmplBundle);
         $.each(bundles.bundles, function() {
-            //console.log(self);
             if (this.status != 'DEPRECATED') {
               this.install = this.status == 'INSTALL' || this.status == 'REQUIRED';
               this.required = this.status == 'REQUIRED';
@@ -37,12 +34,23 @@ var OCUpdater = {
             }
         });
         body.html(tmpl.mustache(bundles));
-        $('.bundle').change({self: self}, self.onBundleClick);
+        $(self.config.clsBundle).change({self: self}, self.onBundleClick);
+        $(self.config.btnStart).click({self:self}, self.onStartClick);
     },
 
     onBundleClick: function(ev) {
         var self = ev.data.self;
-        console.log(this.checked);
+        // phone home to prim and enable/disable item.
+        var cmd = {};
+        cmd[this.checked ? 'enable' : 'disable'] = this.name;
+        var url = self.buildURL(self.bundlePath, cmd);
+        self.request(url, self.onBundles, self);
+    },
+
+    onStartClick: function(ev) {
+        var self = ev.data.self;
+        var url = self.buildURL(self.bundlePath, {start: 1});
+        self.request(url, self.onBundles, self);
     },
     
     buildURL: function(path, extra) {
@@ -50,6 +58,9 @@ var OCUpdater = {
         url += "&av=" + this.av;
         url += "&tok=" + this.tok;
         if (extra) {
+          $.each(extra, function(key, value) {
+              url += "&" + encodeURI(key) + "=" + encodeURI(value); 
+          });
           // extra should be an object.
           // urlencode its values and tack it onto the query string.
         }
@@ -57,7 +68,6 @@ var OCUpdater = {
     },
     
     request: function(url, callback, context) {
-        //console.log('request: ' + url);
         $.ajax({
           url: url,
           dataType: 'jsonp',
@@ -70,6 +80,8 @@ var OCUpdater = {
 $(document).ready(function() {
     OCUpdater.init({
         container: "#main",
-        tmplBundle: "#tmpl_bundle" 
+        tmplBundle: "#tmpl_bundle",
+        clsBundle: ".bundle",
+        btnStart: "#start"
     });
 });
